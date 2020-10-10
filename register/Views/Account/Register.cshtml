@@ -1,0 +1,60 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+
+<div>
+     
+    <form asp-controller="Account" asp-action="Register" method="post">
+        <div asp-validation-summary="ModelOnly" ></div>
+
+        <label asp-for="FirstName" class="col-md-2 control-label"></label>
+        <div class=" col-md-3">
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <label asp-for="LastName" class="col-md-2 control-label"></label>
+        <div class=" col-md-3">
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <label asp-for="UserName" class="col-md-2 control-label"></label>
+        <div class=" col-md-3">
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <label asp-for="Email" class="col-md-2 control-label"></label>
+        <div class=" col-md-3">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <label asp-for="Password" class="col-md-2 control-label"></label>
+        <div class=" col-md-3">
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <label asp-for="ConfPassword" class="col-md-2 control-label"></label>
+        <div class=" col-md-3">
+            <input asp-for="ConfPassword" class="form-control" />
+            <span asp-validation-for="ConfPassword" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group ml-3 mt-2">
+            <button type="submit" class="btn btn-primary btn-success">ENTER</button>
+        </div>
+    </form>
+</div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
