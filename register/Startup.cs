@@ -13,6 +13,9 @@ using Microsoft.Extensions.Hosting;
 using register.Controllers;
 using register.Models;
 using register.Models.DBcontext;
+using register.Models.SeedData;
+using register.Password;
+using register.PersianErrors;
 
 namespace register
 {
@@ -23,6 +26,7 @@ namespace register
             Configuration = configuration;
         }
 
+        
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -33,18 +37,27 @@ namespace register
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DBContextConnection"));
             });
-          // database.AddControllers(AccountController) 
+            
+            services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordPolicy>();
             services.AddIdentity<AppUser, IdentityRole>(option=>
             {
+                ////password and user policy
                 option.User.RequireUniqueEmail = true;
+                option.Password.RequireUppercase = false;
+                option.Password.RequireDigit = false;
+                option.Password.RequireLowercase = false;
+                option.Password.RequireDigit = false;
+                option.Password.RequiredUniqueChars = 0;
+                option.Password.RequireNonAlphanumeric = false;
             })
                 .AddEntityFrameworkStores<AppDBcontext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddErrorDescriber<Errors>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env , AppDBcontext db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env , AppDBcontext db ,IServiceProvider service)
         {
             if (env.IsDevelopment())
             {
@@ -56,8 +69,11 @@ namespace register
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             db.Database.EnsureCreated();
+            SeedData.Initialize(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
+            SeedData.CreateUserRoles(service).Wait();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -72,6 +88,7 @@ namespace register
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
     }
 }

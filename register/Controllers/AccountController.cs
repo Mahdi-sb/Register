@@ -17,14 +17,16 @@ namespace register.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _role;
+       
 
-        //AppDBcontext dBcontext = new AppDBcontext();
+
         public AccountController(UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager)
+            SignInManager<AppUser> signInManager , RoleManager<IdentityRole> role)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            
+            _role = role;
         }
 
         [HttpGet]
@@ -33,12 +35,12 @@ namespace register.Controllers
             return View();
         }
 
+        /////register Action
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model )
         {
             if (ModelState.IsValid) 
             { 
-                
                  var user = new AppUser()
                 {
                 UserName = model.UserName,
@@ -46,23 +48,26 @@ namespace register.Controllers
                 EmailConfirmed = true,
                 FirstName=model.FirstName,
                 LastName=model.LastName
-                
-                
                  };
 
                var result =await _userManager.CreateAsync(user,model.Password );
-
-                if (result.Succeeded)
+                var user1 = await _userManager.FindByEmailAsync(model.Email);
+               
+                if (result.Succeeded )
                 {
-                   
-                    return RedirectToAction("Index", "Home");
-                    
+                    var result1 =await _userManager.AddToRoleAsync(user1, "User");
+                    if (result1.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                     
                 }
-
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
+
+
             }
             return View();
         }
@@ -77,6 +82,7 @@ namespace register.Controllers
             return View();
         }
 
+        ////login action
         [HttpPost]
         public async Task<IActionResult>  Login(LoginViewModel model)
         {
@@ -98,11 +104,13 @@ namespace register.Controllers
                     return View(model);
                 }
 
-                ModelState.AddModelError("", "User Name or Password is Incorrect !!!");
+                ViewData["ErrorMessage"] = "نام کاربری یا رمز عبور اشتباه است";
+                return View(model);
             }
             return View();
         }
 
+        ////logout Action
         [HttpPost , ValidateAntiForgeryToken]
         public async Task<IActionResult>  Logout()
         {

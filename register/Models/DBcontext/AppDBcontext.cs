@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ namespace register.Models.DBcontext
 {
     public class AppDBcontext : IdentityDbContext<AppUser>
     {
-        //public AppDBcontext() { }
         public AppDBcontext(DbContextOptions dbContextOptions)
 
             : base(dbContextOptions)
@@ -17,11 +17,6 @@ namespace register.Models.DBcontext
 
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)//connection
-        //{
-        //    optionsBuilder.UseSqlServer("server=localhost;Database=EmploeeDB;Trusted_connection=True;MultipleActiveResultSets=true ");
-        //    base.OnConfiguring(optionsBuilder);
-        //}
-        //public DbSet<AppUser>  appUsers { get; set; }
+
     }
 }

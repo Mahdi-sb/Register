@@ -3,24 +3,25 @@
     ViewData["Title"] = "Login";
 }
 
-<div>
+<div dir="rtl">
 
     @if (ViewData["ErrorMessage"] != null)
     {
-        <div class="text-danger">@ViewData["Message"]</div>
+        <div class="text-danger float-right" dir="rtl">@ViewData["ErrorMessage"]</div>
+        <br />
     }
 
 
     <form asp-controller="Account" asp-action="Login" method="post">
         <div asp-validation-summary="ModelOnly"></div>
         <div class="form-group">
-            <label asp-for="UserName" class="col-md-2 control-label"></label>
+            <label asp-for="UserName"  style="margin-right:12px" class="float-right"></label>
             <div class=" col-md-3">
                 <input asp-for="UserName" class="form-control" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
 
-            <label asp-for="Password" class="col-md-2 control-label"></label>
+            <label asp-for="Password" style="margin-right:12px" class=" float-right   "></label>
 
             <div class=" col-md-3 ">
                 <input asp-for="Password" class="form-control" />
@@ -28,7 +29,7 @@
             </div>
         </div>
         <div class="ml-3">
-            <button type="submit" class="btn btn-primary btn-success">ENTER</button>
+            <button type="submit" class="btn btn-primary btn-success  float-right mr-3">ورود</button>
         </div>
     </form>
 </div>

@@ -9,13 +9,7 @@ namespace register
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-            //AppDBcontext db = new AppDBcontext();
-            //db.Database.EnsureCreated();
-            
-            
-           
 
-           
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
