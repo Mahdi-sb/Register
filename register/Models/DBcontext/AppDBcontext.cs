@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using register.Models.Questions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace register.Models.DBcontext
 
         }
 
-
+        public DbSet<ModelQuestion> Questions { get; set; }
+        public DbSet<ModelAnswer> Answers { get; set; }
     }
 }

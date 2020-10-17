@@ -1,0 +1,55 @@
+﻿@model List<register.Models.Questions.ModelQuestion>
+@{
+    ViewData["Title"] = "ViewQuestions";
+}
+
+<h1>ViewQuestions</h1>
+
+@if (!Model.Any())
+{
+    <a asp-controller="Question" asp-action="AddQuestion" class=" btn btn-primary mb-3"
+       style=" width:auto">اضافه کردن سوال</a>
+}
+else
+{
+    <a asp-controller="Question" asp-action="AddQuestion" class=" btn btn-primary mb-3"
+       style=" width:auto">اضافه کردن سوال</a>
+    for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="card mb-3 ">
+            <div class="card-body">
+                <h5 class="card-title">@(Model[i].Quaere)</h5>
+            </div>
+            <div class="card-footer">
+                <a asp-controller="Question" asp-action="EditQuestion"
+                   asp-route-id="@(Model[i].Id)" class="btn btn-info">ویرایش</a>
+
+                @if (Model[i].View > 0)
+                {
+                    <a class="btn btn-danger disabled">حذف</a>
+                }
+                else
+                {
+                    <a asp-controller="Question" asp-action="DeleteQuestion" class="btn btn-danger " asp-route-id="@(Model[i].Id)">حذف</a>
+
+                }
+                @if (Model[i].Status)
+                {
+                    <a asp-controller="Question" asp-action="DeactivateQuestion"
+                       asp-route-id="@(Model[i].Id)" class="btn btn-warning">غیر فعال کردن</a>
+                    <a class="btn btn-success disabled">فعال کردن</a>
+                }
+                else
+                {
+                    <a class=" btn btn-warning disabled">غیر فعال کردن</a>
+                    <a asp-controller="Question" asp-action="ActiveQuestion"
+                       asp-route-id="@(Model[i].Id)" class="btn btn-success ">فعال کردن</a>
+                }
+
+
+            </div>
+        </div>
+    }
+
+
+}

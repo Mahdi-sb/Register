@@ -1,0 +1,30 @@
+﻿@model register.ViewModels.Questions.Question
+@{
+    ViewData["Title"] = "AddQuestion";
+}
+
+<h2>اضافه کردن سوال</h2>
+
+@if (ViewData["ErrorMessage"] != null)
+{
+    <div class="text-danger float-right font-weight-bold" >@ViewData["ErrorMessage"]</div>
+    <br />
+}
+<div>
+    <form asp-controller="Question" asp-action="AddQuestion" method="post">
+        <div asp-validation-summary="ModelOnly"></div>
+        <label asp-for="Quaere" style="margin-right:12px" class="float-right"></label>
+        <div class=" col-md-3">
+            <input asp-for="Quaere" class="form-control" />
+            <span asp-validation-for="Quaere" class="text-danger"></span>
+        </div>
+
+        <div class="form-group ml-3 mt-2">
+            <button type="submit" class="btn btn-primary btn-success float-right mr-3">ثبت</button>
+        </div>
+    </form>
+
+
+
+
+</div>

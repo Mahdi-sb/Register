@@ -1,0 +1,74 @@
+﻿@model List<register.Models.Questions.ModelQuestion>
+@{
+    ViewData["Title"] = "ShowResult";
+    var result = ViewData["result"] as List<register.ViewModels.Questions.ShowResult>;
+    var username = ViewData["user"] as List<string>;
+    bool Filter = (bool)ViewData["checkFilter"]  ;
+    
+}
+
+
+<div class="container">
+    <div class="dropdown">
+        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">
+            نام کاربری را انتخاب کنید
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu ">
+            @foreach (var item in username)
+            {
+                
+                <li><a class="text-dark ml-4" asp-route-username=@item asp-controller="Question" asp-action="ShowResult">@item</a></li>
+            }
+
+        </ul>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".dropdown-menu li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+@foreach (var item in Model)
+{
+<div class="card mb-3 ">
+    <div class="card-body">
+        <h5 class="card-title">@(item.Quaere)</h5>
+        @if (item.Status)
+        {
+            <h3 class="text-success font-weight-bold">Status : Active</h3>
+        }
+        else
+        {
+            <h3 class="text-danger font-weight-bold">Status : Deactive</h3>
+        }
+    </div>
+    
+
+    @foreach (var item1 in result)
+    {
+
+        if (item.Quaere == item1.Queare)
+        {
+            <div class="card-footer font-weight-bold text-black-50">
+                <a>نام کاریری :@item1.UsrName     امتیاز: @item1.Rating</a>
+
+            </div>
+        }
+        @*else if (Filter)
+        {
+            <div class="card-footer font-weight-bold text-black-50">
+                <a>پاسخی به این سوال داده نشده است.</a>
+            </div>
+        }*@
+
+    }
+</div>
+}

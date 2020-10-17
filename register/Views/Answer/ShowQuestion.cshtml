@@ -1,0 +1,68 @@
+﻿@model List<register.Models.Questions.ModelQuestion>
+
+@{
+    ViewData["Title"] = "ShowQuestion";
+    var rating = ViewData["Rate"] as List<register.Models.Questions.ModelAnswer>;
+
+}
+
+<h1>ShowQuestion</h1>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    bool ct = true;
+    if (Model[i].Status)
+    {
+        for (int k = 0; k < rating.Count; k++)
+        {
+            if (rating[k].QuestionId == Model[i].Id && (rating[k].Rate >= 1 && rating[k].Rate <= 5))
+            {
+                <div class="card mb-3 ">
+                    <div class="card-body">
+                        <h5 class="card-title">@(Model[i].Quaere)</h5>
+                        <a>شما به این سوال پاسخ داده اید. امتیاز شما به این سوال :</a>
+                        @for (int j = rating[k].Rate; j > 0; j--)
+                        {
+                            <a>⭐</a>
+                        }
+
+                    </div>
+                </div>
+                ct = false;
+                break;
+
+            }
+
+        }
+
+        if (ct)
+        {
+            <div class="card mb-3 ">
+                <div class="card-body">
+                    <h5 class="card-title">@(Model[i].Quaere)</h5>
+                    @for (int j = 5; j > 0; j--)
+                    {
+                        <a style="text-decoration:none" asp-route-rate=@j asp-route-qusId=@(Model[i].Id) asp-controller="Answer" asp-action="RateQuestion" data-toggle="tooltip" title="@j" data-placement="top">⭐</a>
+                    }
+
+                </div>
+            </div>
+        }
+
+    }
+}
+
+
+
+
+
+
+
+

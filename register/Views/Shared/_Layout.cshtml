@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body dir="rtl">
@@ -23,7 +25,7 @@
                     <ui class="navbar-nav flex-grow-1 ml-auto">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <div class="nav-item mr-auto">
+                            <div class="nav-item mr-auto mt-1">
                                 <form asp-controller="Account" asp-action="Logout" method="post">
                                     <button type="submit" class="btn nav-link text-danger">خروج</button>
                                 </form>
@@ -32,29 +34,89 @@
                         }
                         else
                         {
-                            <div class="nav-item mr-auto"  >
+                            <div class="nav-item mr-auto">
                                 <a class="nav-link text-primary" asp-area="" asp-controller="Account" asp-action="Register">ثبت نام</a>
                             </div>
 
-                            <div class="nav-item mr-6" >
-                                <a  class="nav-link text-success " asp-area="" asp-controller="Account" asp-action="Login">ورود</a>
+                            <div class="nav-item mr-6">
+                                <a class="nav-link text-success " asp-area="" asp-controller="Account" asp-action="Login">ورود</a>
                             </div>
 
                         }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="dropdown">
+                                <button class="dropbtn text-success">سوالات نظرسنجی</button>
+                                <div class="dropdown-content">
+                                    <a asp-area="" asp-controller="Question" asp-action="ViewQuestions">ثبت سوالات</a>
+                                    <a asp-area="" asp-controller="Question" asp-action="ViewDeactivateQuestion">سوالات غیر فعال </a>
+                                    <a asp-area="" asp-controller="Question" asp-action="ShowResult">نمایش  نتایج نظرسنجی </a>
+
+                                </div>
+                            </div>
+
+                            <style>
+                                /* Dropdown Button */
+                                .dropbtn {
+                                    background-color: white;
+                                    color: black;
+                                    padding: 16px;
+                                    font-size: 16px;
+                                    border: none;
+                                }
+
+                                /* The container <div> - needed to position the dropdown content */
+                                .dropdown {
+                                    position: relative;
+                                    display: inline-block;
+                                }
+
+                                /* Dropdown Content (Hidden by Default) */
+                                .dropdown-content {
+                                    display: none;
+                                    position: absolute;
+                                    background-color: #f1f1f1;
+                                    min-width: 160px;
+                                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                    z-index: 1;
+                                }
+
+                                    /* Links inside the dropdown */
+                                    .dropdown-content a {
+                                        color: black;
+                                        padding: 12px 16px;
+                                        text-decoration: none;
+                                        display: block;
+                                    }
+
+                                        /* Change color of dropdown links on hover */
+                                        .dropdown-content a:hover {
+                                            background-color: aqua;
+                                        }
+
+                                /* Show the dropdown menu on hover */
+                                .dropdown:hover .dropdown-content {
+                                    display: block;
+                                }
+
+                                /* Change the background color of the dropdown button when the dropdown content is shown */
+                                .dropdown:hover .dropbtn {
+                                    background-color: white;
+                                }
+                            </style>
+                        }
+
+                        @if (User.IsInRole("User"))
+                        {
+
+                            <div class="nav-item mt-2 mr-3">
+                                <a class="nav-link text-primary" asp-area="" asp-controller="Answer" asp-action="ShowQuestion">نظرسنجی</a>
+                            </div>
+
+                        }
+
+
                     </ui>
-
-
-
-
-                    @*<ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        
-                    </ul>*@
                 </div>
             </div>
         </nav>
