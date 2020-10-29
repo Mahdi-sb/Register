@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace register.Models
 {
+    /// <summary>
+    /// Identity database
+    /// </summary>
     public class AppUser :IdentityUser
     {
         public string FirstName { get; set; }

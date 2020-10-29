@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
-
+@{ 
+}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -109,6 +110,7 @@
                         @if (User.IsInRole("User"))
                         {
 
+                            
                             <div class="nav-item mt-2 mr-3">
                                 <a class="nav-link text-primary" asp-area="" asp-controller="Answer" asp-action="ShowQuestion">نظرسنجی</a>
                             </div>

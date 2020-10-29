@@ -20,5 +20,6 @@ namespace register.Models.DBcontext
 
         public DbSet<ModelQuestion> Questions { get; set; }
         public DbSet<ModelAnswer> Answers { get; set; }
+        
     }
 }

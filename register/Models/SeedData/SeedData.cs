@@ -15,7 +15,11 @@ namespace register.Models.SeedData
 {
     public class SeedData
     {
-        ////Seed roles to Database
+        /// <summary>
+        /// seed data to database 
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
         public static async Task CreateUserRoles(IServiceProvider serviceProvider)
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -18,6 +19,10 @@ namespace register.Controllers
         {
             _context = context;
         }
+        /// <summary>
+        /// show questions to user
+        /// </summary>
+        /// <returns></returns>
         public IActionResult ShowQuestion()
         {
             var useId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -26,6 +31,12 @@ namespace register.Controllers
             return View(show);
         }
 
+        /// <summary>
+        /// save rating 
+        /// </summary>
+        /// <param name="rate"></param>
+        /// <param name="qusId"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult RateQuestion(int rate, int qusId)
         {
